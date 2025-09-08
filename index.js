@@ -281,7 +281,7 @@ fabric.Object.prototype.controls.cloneControl = new fabric.Control({
         const loader = new GLTFLoader();
         try {
             const gltf = await new Promise((resolve, reject) => {
-                loader.load('images/mug.glb', resolve, undefined, reject);
+                loader.load('https://mohamed9osos.github.io/mugs/images/mug.glb', resolve, undefined, reject);
             });
             if (this.mug) this.scene.remove(this.mug);
             this.mug = gltf.scene;
@@ -912,3 +912,4 @@ fabric.Object.prototype.controls.cloneControl = new fabric.Control({
 
 
 new MugDesigner();
+
