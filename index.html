@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mug Designer</title>
+    <link rel="stylesheet" href="stylr.css">
+</head>
+<body>
+    <!-- نافذة التحذير -->
+    <div id="warningModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <p id="warningMessage">⚠ الصورة أكبر من المساحة المسموحة</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Sidebar Tools -->
+        <div class="sidebar">
+            <div class="tool-section">
+                <h3>إضافة تصميم</h3>
+                <div class="design-tools">
+                    <input type="text" id="textInput" placeholder="أدخل النص هنا">
+                    <select id="fontSelect">
+                        <option value="Arial">Arial</option>
+                        <option value="Helvetica">Helvetica</option>
+                        <option value="Times New Roman">Times New Roman</option>
+                    </select>
+                    <select id="fontStyleSelect">
+                        <option value="normal">عادي</option>
+                        <option value="bold">عريض</option>
+                        <option value="italic">مائل</option>
+                        <option value="bold italic">عريض ومائل</option>
+                        <option value="outline">مُحدد</option>
+                    </select>
+                    <input type="color" id="colorPicker" value="#000000" title="لون النص">
+                    <button id="addTextBtn" class="btn">إضافة نص</button>
+                    <button id="addImageBtn" class="btn">اختيار صورة</button>
+                    <input type="file" id="imageInput" accept="image/*" style="display: none;">
+                    <label>
+                        <input type="checkbox" id="grayscaleFilter"> تطبيق فلتر أبيض وأسود
+                    </label>
+                </div>
+            </div>
+
+            <div class="tool-section">
+                <h3>الباترن الجاهزة</h3>
+                <div class="pattern-grid">
+                    <img class="pattern-thumb" src="/images/red.jpg" data-full="pattern1-1306x800.png">
+                    <img class="pattern-thumb" src="/images/thumb1.jpg" data-full="pattern3-1306x800.png">
+                    <img class="pattern-thumb" src="/images/thumb2.jpg" data-full="pattern2-1306x800.png">
+                    <img class="pattern-thumb" src="/images/thumb3.jpg" data-full="pattern3-1306x800.png">
+                    <img class="pattern-thumb" src="/images/thumb4.jpg" data-full="pattern3-1306x800.png">
+                    <img class="pattern-thumb" src="/images/thumb5.jpg" data-full="pattern3-1306x800.png">
+                    <img class="pattern-thumb" src="/images/4.jpg" data-full="pattern3-1306x800.png">
+                </div>
+            </div>
+
+            <div class="tool-section">
+                <h3>لون المج الداخلي</h3>
+                <div class="color-grid">
+                    <div class="color-swatch" data-color="#FFFFFF" style="background: #FFFFFF"></div>
+                    <div class="color-swatch" data-color="#000000" style="background: #000000"></div>
+                    <div class="color-swatch" data-color="#C0392B" style="background: #C0392B"></div>
+                    <div class="color-swatch" data-color="#3498DB" style="background: #3498DB"></div>
+                    <div class="color-swatch" data-color="#27AE60" style="background: #27AE60"></div>
+                    <div class="color-swatch" data-color="#8E44AD" style="background: #8E44AD"></div>
+                    <div class="color-swatch" data-color="#F1C40F" style="background: #F1C40F"></div>
+                    <div class="color-swatch" data-color="#7F8C8D" style="background: #7F8C8D"></div>
+                    <div class="color-swatch" data-color="#FDE3A7" style="background: #FDE3A7"></div>
+                    <div class="color-swatch" data-color="#A3D2F1" style="background: #A3D2F1"></div>
+                    <div class="color-swatch" data-color="#F1948A" style="background: #F1948A"></div>
+                    <div class="color-swatch" data-color="#A9DFBF" style="background: #A9DFBF"></div>
+                    <div class="color-swatch" data-color="#D5D8DC" style="background: #D5D8DC"></div>
+                    <div class="color-swatch" data-color="#D7BDE2" style="background: #D7BDE2"></div>
+                    <div class="color-swatch" data-color="#FFD700" style="background: #FFD700"></div>
+                </div>
+            </div>
+
+            <div class="tool-section">
+                <h3>التحكم</h3>
+                <button id="applyDesignBtn" class="btn primary">تطبيق التصميم</button>
+                <button id="resetBtn" class="btn secondary">إعادة ضبط</button>
+                <button id="undoBtn" class="btn secondary">تراجع</button>
+                <button id="exportBtn" class="btn primary">تصدير للطباعة</button>
+                <button id="togglePatternBtn" class="btn secondary">تفعيل حركة الباترن</button>
+            </div>
+
+            <div class="tool-section">
+                <h3>الطبقات</h3>
+                <div id="layersPanel" class="layers-panel"></div>
+            </div>
+        </div>
+
+        <!-- المحتوى الرئيسي -->
+        <div class="main-content">
+            <div class="split-container">
+                <div class="model-container">
+                    <div id="modelViewer"></div>
+                </div>
+                <div class="splitter">
+                    <div class="splitter-handle"></div>
+                </div>
+                <div class="canvas-container">
+                    <canvas id="designCanvas"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dependencies -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.158.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.158.0/examples/jsm/"
+        }
+    }
+    </script>
+    <script type="module" src="index.js"></script>
+</body>
+</html>
